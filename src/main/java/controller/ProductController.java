@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import service.ProductService;
 
 import java.io.File;
@@ -18,31 +19,24 @@ public class ProductController {
     ProductService productService;
 
 
-    @GetMapping("/product")
-    public String getAll(Model model) {
-        model.addAttribute("product",productService.products);
-        return "showProduct";
+    @GetMapping("/products")
+    public ModelAndView getAll(){
+        ModelAndView modelAndView = new ModelAndView("showProduct");
+        modelAndView.addObject("products",productService.products);
+        return modelAndView;
     }
 
-    @GetMapping("/create")
-    public String getCreate(){
-        return "createProduct";
-    }
-
-    @PostMapping("/create")
-    public String create(@ModelAttribute Product product, @RequestParam MultipartFile imgFile) throws IOException {
-        String name = imgFile.getOriginalFilename();
-        FileCopyUtils.copy(imgFile.getBytes(), new File("/Users/johntoan98gmail.com/Desktop/module4/Demo_Spring_MVC_C07/src/main/webapp/img/" + name));
-        product.setImg("/" +  name);
-        productService.add(product);
-        return "redirect:/products";
+    @GetMapping("/home")
+    public ModelAndView home(){
+        ModelAndView modelAndView = new ModelAndView("home");
+        modelAndView.addObject("name","Tuấn Mạnh");
+        return modelAndView;
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable int id){
+    public ModelAndView delete(@PathVariable int id){
         productService.delete(id);
-        return "redirect:/products";
+        ModelAndView modelAndView = new ModelAndView("redirect:/products");
+        return modelAndView;
     }
-
-
 }

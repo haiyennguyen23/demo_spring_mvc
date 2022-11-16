@@ -7,15 +7,17 @@ public class Product {
  private String name;
  private String img;
  private  Double price;
-
+ private boolean status;
     public Product() {
     }
 
-    public Product(int id, String name, String img, Double price) {
+    public Product(int id, String name, String img, Double price, boolean status) {
         this.id = id;
         this.name = name;
         this.img = img;
         this.price = price;
+        this.status=status;
+
     }
 
     public int getId() {
@@ -48,6 +50,13 @@ public class Product {
 
     public void setDescription(Double price ) {
         this.price = price;
+    }
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
 }
